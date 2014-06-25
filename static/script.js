@@ -4,7 +4,7 @@ function removeItems() {
 
 function generateDailyBlocks() {
 	removeItems();
-	for (var currDate = startDate; currDate.isBefore(endDate); currDate = currDate.add('d', 1)) {
+	for (var currDate = startDate; !currDate.isAfter(endDate); currDate = currDate.add('d', 1)) {
 		var item = $('<li/>')
 			.append($('<label/>', {
 				text: currDate.format('ddd MM/DD')
@@ -22,9 +22,15 @@ function generateDailyBlocks() {
 /********************
   Script starts
 ********************/
+
+// set default dates
 var startDate = moment(),
 	endDate = moment().add('d', 7);
 
+$('#startDate').val(startDate.format('YYYY-MM-DD'));
+$('#endDate').val(endDate.format('YYYY-MM-DD'));
+
+// set change events for date range
 $('#startDate').on('change', function(e) {
 	startDate = moment($(e.target).val());
 	if (startDate.isAfter(endDate)) {
@@ -38,8 +44,6 @@ $('#endDate').on('change', function(e) {
 	if (endDate.isBefore(startDate)) {
 		startDate = moment(endDate).subtract('d', 7);
 	}
-	console.log('start date ' + new Date(startDate));
-	console.log('end date ' + new Date(endDate));
 	generateDailyBlocks();
 });
 
@@ -53,3 +57,7 @@ $('#list').on('keyup', function(e) {
 });
 
 generateDailyBlocks();
+
+// FIXME: chaning dates = buggy
+// TODO: advance by week
+// TODO: localStorage
