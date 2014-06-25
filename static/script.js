@@ -19,6 +19,16 @@ function generateDailyBlocks() {
 	}
 }
 
+function updateDates(startDate, endDate) {
+	if (startDate) {
+		$('#startDate').val(startDate.format('YYYY-MM-DD'));
+	}
+
+	if (endDate) {
+		$('#endDate').val(endDate.format('YYYY-MM-DD'));
+	}
+}
+
 /********************
   Script starts
 ********************/
@@ -27,14 +37,14 @@ function generateDailyBlocks() {
 var startDate = moment(),
 	endDate = moment().add('d', 7);
 
-$('#startDate').val(startDate.format('YYYY-MM-DD'));
-$('#endDate').val(endDate.format('YYYY-MM-DD'));
+updateDates(startDate, endDate);
 
 // set change events for date range
 $('#startDate').on('change', function(e) {
 	startDate = moment($(e.target).val());
 	if (startDate.isAfter(endDate)) {
-		endDate = moment(startDate).add('d', 7);
+		endDate = moment(startDate).add('days', 7);
+		updateDates(null, endDate);
 	}
 	generateDailyBlocks();
 });
@@ -42,7 +52,8 @@ $('#startDate').on('change', function(e) {
 $('#endDate').on('change', function(e) {
 	endDate = moment($(e.target).val());
 	if (endDate.isBefore(startDate)) {
-		startDate = moment(endDate).subtract('d', 7);
+		startDate = moment(endDate).subtract('days', 7);
+		updateDates(startDate, null);
 	}
 	generateDailyBlocks();
 });
@@ -61,3 +72,4 @@ generateDailyBlocks();
 // FIXME: chaning dates = buggy
 // TODO: advance by week
 // TODO: localStorage
+// TODO: paginate
