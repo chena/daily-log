@@ -1,0 +1,19 @@
+#list {
+	margin-top: 20px;
+	padding: 20px 10px;
+	list-style: none;
+	background: #eee;
+	border-radius: 10px;
+}
+
+#list li {
+	padding: 10px;
+}
+
+#list ul {
+	outline: none;
+	background: #fff;
+	min-height: 40px;
+	padding: 5px;
+	border-radius: 2px;
+}

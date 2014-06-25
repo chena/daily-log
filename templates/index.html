@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Daily Log</title>
+    	<link rel="stylesheet" media="all" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    	<link rel="stylesheet" media="all" href="{{ url_for('static', filename='style.css') }}">
+    	<script src="{{ url_for('static', filename='jquery-1.11.0.min.js') }}"></script>
+	</head>
+	<body>
+		<section class="container col-md-8 col-md-offset-2">
+			<h1>Daily Log</h1>
+			<hr>
+			<div class="col-md-6">
+				<label>Start Date</label>
+				<input class="form-control" id="startDate" type="date">
+			</div>
+
+			<div class="col-md-6">
+				<label>End Date</label>
+				<input class="form-control" id="endDate" type="date">
+			</div>
+		</section>
+
+		<section class="container">
+			<ul id="list" class="col-md-8 col-md-offset-2"></ul>
+		</section>
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+		<script src="{{ url_for('static', filename='script.js') }}"></script>
+	</body>
+</html>
