@@ -7,7 +7,7 @@
 }
 
 #list li {
-	padding: 10px;
+	padding: 2px 10px;
 }
 
 #list ul {
@@ -15,5 +15,6 @@
 	background: #fff;
 	min-height: 40px;
 	padding: 5px;
+	margin: 5px;
 	border-radius: 2px;
 }

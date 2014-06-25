@@ -2,19 +2,18 @@ function removeItems() {
 	$('#list').find('li').remove();
 }
 
-function generateDate() {
+function generateDailyBlocks() {
 	removeItems();
 	for (var currDate = startDate; currDate.isBefore(endDate); currDate = currDate.add('d', 1)) {
-		var item = $('<li/>', {
-			'class': 'item',
-			text: currDate.format('ddd MM/DD')
-		});
-
-		item.append(
-			'<ul contenteditable="true">' +
-				'<li></li>' +
-			'</ul>'
-		);
+		var item = $('<li/>')
+			.append($('<label/>', {
+				text: currDate.format('ddd MM/DD')
+			}))
+			.append(
+				'<ul contenteditable="true">' +
+					'<li></li>' +
+				'</ul>'
+			);
 
 		$('#list').append(item);
 	}
@@ -31,7 +30,7 @@ $('#startDate').on('change', function(e) {
 	if (startDate.isAfter(endDate)) {
 		endDate = moment(startDate).add('d', 7);
 	}
-	generateDate();
+	generateDailyBlocks();
 });
 
 $('#endDate').on('change', function(e) {
@@ -39,7 +38,9 @@ $('#endDate').on('change', function(e) {
 	if (endDate.isBefore(startDate)) {
 		startDate = moment(endDate).subtract('d', 7);
 	}
-	generateDate();
+	console.log('start date ' + new Date(startDate));
+	console.log('end date ' + new Date(endDate));
+	generateDailyBlocks();
 });
 
 // append a new item if none exists
@@ -51,16 +52,4 @@ $('#list').on('keyup', function(e) {
 	}
 });
 
-/*
-$('#list').on('keyup', function(e) {
-	var target = $(e.target),
-		content = target.text();
-
-	if (e.which == 13) {
-		target.text('');
-		target.append($('<li/>', {
-			text: content
-		}));
-	}
-});*/
-generateDate();
+generateDailyBlocks();
