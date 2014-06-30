@@ -8,13 +8,15 @@ function generateDailyBlocks() {
 		var item = $('<li/>')
 			.append($('<label/>', {
 				text: currDate.format('ddd MM/DD')
-			}))
-			.append(
-				'<ul contenteditable="true">' +
-					'<li></li>' +
-				'</ul>'
-			);
+			}));
 
+		var log = $('<ul/>', {
+				'contenteditable': true,
+				'class': 'day',
+				'data-log': currDate
+			}).append($('<li/>'));
+
+		item.append(log);
 		$('#list').append(item);
 	}
 }
@@ -58,14 +60,22 @@ $('#endDate').on('change', function(e) {
 	generateDailyBlocks();
 });
 
-// append a new item if none exists
 $('#list').on('keyup', function(e) {
+	console.log(e.target);
 	var target = $(e.target);
 
+	// append a new item if none exists
 	if (target.find('li').length == 0) {
 		target.append($('<li/>'));
+		return;
 	}
+
+	if (e.which == 13) {
+		console.log(target.find('li').data('log'));
+	}
+
 });
+
 
 generateDailyBlocks();
 
