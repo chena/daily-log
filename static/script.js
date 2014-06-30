@@ -61,7 +61,6 @@ $('#endDate').on('change', function(e) {
 });
 
 $('#list').on('keyup', function(e) {
-	console.log(e.target);
 	var target = $(e.target);
 
 	// append a new item if none exists
@@ -70,8 +69,13 @@ $('#list').on('keyup', function(e) {
 		return;
 	}
 
+	// TODO: should make a button to save instead
 	if (e.which == 13) {
-		console.log(target.find('li').data('log'));
+		var log = [];
+		target.find('li').each(function(index, item) {
+			log.push($(item).text());
+		});
+		localStorage.setItem(target.data('log'), JSON.stringify(log));
 	}
 
 });
