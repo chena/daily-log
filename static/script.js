@@ -31,12 +31,18 @@ function updateDates(startDate, endDate) {
 	}
 }
 
+function loadLocalData() {
+	for (key in localStorage) {
+		console.log(key);
+	}
+}
+
 /********************
   Script starts
 ********************/
 
 // set default dates
-var startDate = moment(),
+var startDate = moment().subtract('d', 7),
 	endDate = moment().add('d', 7);
 
 updateDates(startDate, endDate);
@@ -82,6 +88,7 @@ $('#list').on('keyup', function(e) {
 
 
 generateDailyBlocks();
+loadLocalData();
 
 // FIXME: chaning dates = buggy
 // TODO: advance by week
