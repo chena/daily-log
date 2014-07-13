@@ -7,7 +7,7 @@ function generateDailyBlocks() {
 	for (var currDate = startDate; !currDate.isAfter(endDate); currDate = currDate.add('d', 1)) {
 		var item = $('<li/>')
 			.append($('<label/>', {
-				text: currDate.format('ddd MM/DD')
+				text: currDate.format('MM/DD (ddd)')
 			}));
 
 		var log = $('<ul/>', {
