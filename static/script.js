@@ -34,16 +34,31 @@ function updateDates(startDate, endDate) {
 function loadLocalData() {
 	for (var key in localStorage) {
 		var d = new Date(Number.parseInt(key));
-		//console.log($('#list').find($('<ul/>').data('log'), key));
+		var matched = $('.day').filter(function() { 
+		  return $(this).data('log') == key;
+		});
+		if (matched.length > 0) {
+			matched.find('li').remove();
+			var arr = JSON.parse(localStorage.getItem(key));
+			arr.forEach(function(text) {
+				matched.append($('<li>', {
+					text: text
+				}));
+				
+			});	
+		}
 	}
 }
+
+
 
 /********************
   Script starts
 ********************/
 
 // set default dates
-var startDate = moment().subtract('d', 7),
+//var startDate = moment().subtract('d', 7),
+var startDate = moment('20140721', 'YYYYMMDD'),
 	endDate = moment().add('d', 7);
 
 updateDates(startDate, endDate);
