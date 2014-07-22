@@ -5,16 +5,16 @@ function removeItems() {
 function generateDailyBlocks() {
 	removeItems();
 	for (var currDate = startDate; !currDate.isAfter(endDate); currDate = currDate.add('d', 1)) {
-		var item = $('<li/>')
-			.append($('<label/>', {
+		var item = $('<li>')
+			.append($('<label>', {
 				text: currDate.format('MM/DD (ddd)')
 			}));
 
-		var log = $('<ul/>', {
+		var log = $('<ul>', {
 				'contenteditable': true,
 				'class': 'day',
 				'data-log': currDate
-			}).append($('<li/>'));
+			}).append($('<li>'));
 
 		item.append(log);
 		$('#list').append(item);
@@ -32,8 +32,9 @@ function updateDates(startDate, endDate) {
 }
 
 function loadLocalData() {
-	for (key in localStorage) {
-		console.log(key);
+	for (var key in localStorage) {
+		var d = new Date(Number.parseInt(key));
+		//console.log($('#list').find($('<ul/>').data('log'), key));
 	}
 }
 
@@ -66,17 +67,18 @@ $('#endDate').on('change', function(e) {
 	generateDailyBlocks();
 });
 
-$('#list').on('keyup', function(e) {
-	var target = $(e.target);
+$('#list').on('keydown', function(e) {
+	var target = $(e.target),
+		items = target.find('li');
 
 	// append a new item if none exists
-	if (target.find('li').length == 0) {
-		target.append($('<li/>'));
+	if (items.length == 1 && e.keyCode === 8 && items.text() === '') {	
+		e.preventDefault();
 		return;
 	}
 
 	// TODO: should make a button to save instead
-	if (e.which == 13) {
+	if (e.which === 13) {
 		var log = [];
 		target.find('li').each(function(index, item) {
 			log.push($(item).text());
