@@ -1,6 +1,6 @@
 # Daily Log
 
-Simple app that allows you to log an itemized list daily for a specific date range.
+Simple app that allows you to log a list of items daily for a specific date range.
 
 * Served with Flask(Python). 
 * JavaScript/jQuery for DOM manipulation.
