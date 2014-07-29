@@ -1,33 +1,5 @@
 'use strict';
 
-/*
-var App = (function(moment){
-	function DailyLogApp() {
-		// constructor
-	}
-
-	DailyLogApp.prototype = {
-		someFunction: function() {}
-	}
-
-	return DailyLogApp;
-})(moment);
-
-var app = new App();
-
-function updateDates() {
-	$('#')...
-};
-
-$('#endDate').on('change', function(e) {
-	app.changeStartDate($(e.target).val());
-	updateDates();
-});
-*/
-
-// TODO: don't use jquery!
-// TODO: create a class for Log? 
-
 // the view
 var appView = {
 	updateDisplayedDates: function(startDate, endDate) {
