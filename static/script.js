@@ -102,10 +102,6 @@ App.prototype = {
 		}
 	},
 
-	storeLog: function() {
-
-	},
-
 	startDateChanged: function(value) {
 		// set change events for date range
 		this._startDate = moment(value);
@@ -168,3 +164,4 @@ var app = new App(appView);
 // FIXME: chaning dates = buggy
 // TODO: advance by week or paginate?
 // TODO: save on change not on enter keydown event
+// TODO: convert plain text to a link?? by default any tags are ignored
