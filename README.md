@@ -9,3 +9,5 @@ Simple app that allows you to log a list of items daily for a specific date rang
 * `localStorage` to persist and load data.
 
 Run `python app.py` to start the app.
+
+![daily-log](https://raw.githubusercontent.com/chena/daily-log/master/daily-log.png)
