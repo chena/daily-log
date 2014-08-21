@@ -51,7 +51,7 @@ var appView = {
 		var log = $('<ul>', {
 				'contenteditable': true,
 				'class': 'day',
-				'data-log': date
+				'data-log': +date
 			}).append($('<li>'));
 
 		item.append(log);
@@ -78,9 +78,17 @@ var App = function(view) {
 };
 
 App.prototype = {
+	defaultStartDateKey: '_defaultStartDate',
+
 	// set default dates, set default start date to first day of hacker school
 	setDefaultDates: function() {
-		this._startDate = moment('20140721', 'YYYYMMDD');
+		if (this.defaultStartDateKey in localStorage) {
+			this._startDate = moment(localStorage.getItem(this.defaultStartDateKey), 'YYYYMMDD');
+		} else {
+			this._startDate = moment();
+		}
+		$('#defaultStartDate').attr('checked', true);
+
 		this._endDate = moment().add('d', 7);
 		this._appView.updateDisplayedDates(this._startDate, this._endDate);
 	},
@@ -88,7 +96,7 @@ App.prototype = {
 	generateDailyBlocks: function() {
 		this._appView.clearItems();
 
-		for (var currDate = this._startDate; 
+		for (var currDate = moment(this._startDate); 
 				!currDate.isAfter(this._endDate); 
 				currDate = currDate.add('d', 1)) {
 			this._appView.addItem(currDate);
@@ -97,6 +105,9 @@ App.prototype = {
 
 	loadLocalData: function() {
 		for (var key in localStorage) {
+			if (key === this.defaultStartDateKey) {
+				break;
+			}
 			var entries = JSON.parse(localStorage.getItem(key));
 			this._appView.updateLogItem(key, entries);
 		}
@@ -110,6 +121,7 @@ App.prototype = {
 			this._endDate = moment(this._startDate).add('days', 7);
 			this._appView.updateDisplayedDates(null, this._endDate);
 		}
+
 		this.generateDailyBlocks();
 		this.loadLocalData();
 	},
@@ -126,12 +138,29 @@ App.prototype = {
 	},
 
 	setEventHandlers: function() {
+		var that = this;
+
 		$('#startDate').on('change', function(e) { 
-			app.startDateChanged($(e.target).val()); 
+			var val = $(e.target).val();
+			if (val !== localStorage.getItem(this.defaultStartDateKey)) {
+				$('#defaultStartDate').attr('checked', false);
+			}
+			app.startDateChanged(val); 
 		});
 
 		$('#endDate').on('change', function(e) {
 			app.endDateChanged($(e.target).val());
+		});
+
+		$('#defaultStartDate').on('change', function(e) {
+			var key = '_defaultStartDate',
+				val = $('#startDate').val();
+
+			if ($(e.target).is(':checked')) {
+				localStorage.setItem(key, val);
+			} else {
+				localStorage.removeItem(key);
+			}
 		});
 
 		$('#list').on('keydown', function(e) {
@@ -164,4 +193,3 @@ var app = new App(appView);
 // FIXME: chaning dates = buggy
 // TODO: advance by week or paginate?
 // TODO: save on change not on enter keydown event
-// TODO: convert plain text to a link?? by default any tags are ignored
