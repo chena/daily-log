@@ -79,8 +79,7 @@ var App = function(view) {
 
 App.prototype = {
 	defaultStartDateKey: '_defaultStartDate',
-
-	// set default dates, set default start date to first day of hacker school
+	
 	setDefaultDates: function() {
 		if (this.defaultStartDateKey in localStorage) {
 			this._startDate = moment(localStorage.getItem(this.defaultStartDateKey), 'YYYYMMDD');
