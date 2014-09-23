@@ -83,7 +83,7 @@ App.prototype = {
 		if (this.defaultStartDateKey in localStorage) {
 			this._startDate = moment(localStorage.getItem(this.defaultStartDateKey));
 		} else {
-			this._startDate = moment();
+			this._startDate = moment().startOf('d');
 			localStorage.setItem(this.defaultStartDateKey, this._startDate.format('YYYY-MM-DD'));
 		}
 		$('#defaultStartDate').attr('checked', true);
