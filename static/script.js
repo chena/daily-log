@@ -60,8 +60,7 @@ var appView = {
 
 	_findLogElement: function(key) {
 		return $('.day').filter(function() {
-			// FIXME: why changing "==" to "===" break things?
-			return $(this).data('log') == key;
+			return $(this).data('log') === parseInt(key);
 		});
 	},
 }
@@ -82,9 +81,10 @@ App.prototype = {
 	
 	setDefaultDates: function() {
 		if (this.defaultStartDateKey in localStorage) {
-			this._startDate = moment(localStorage.getItem(this.defaultStartDateKey), 'YYYYMMDD');
+			this._startDate = moment(localStorage.getItem(this.defaultStartDateKey));
 		} else {
 			this._startDate = moment();
+			localStorage.setItem(this.defaultStartDateKey, this._startDate.format('YYYY-MM-DD'));
 		}
 		$('#defaultStartDate').attr('checked', true);
 
@@ -105,7 +105,7 @@ App.prototype = {
 	loadLocalData: function() {
 		for (var key in localStorage) {
 			if (key === this.defaultStartDateKey) {
-				break;
+				continue;
 			}
 			var entries = JSON.parse(localStorage.getItem(key));
 			this._appView.updateLogItem(key, entries);
@@ -152,13 +152,12 @@ App.prototype = {
 		});
 
 		$('#defaultStartDate').on('change', function(e) {
-			var key = '_defaultStartDate',
-				val = $('#startDate').val();
+			var val = $('#startDate').val();
 
 			if ($(e.target).is(':checked')) {
-				localStorage.setItem(key, val);
+				localStorage.setItem(that.defaultStartDateKey, val);
 			} else {
-				localStorage.removeItem(key);
+				localStorage.removeItem(that.defaultStartDateKey);
 			}
 		});
 
